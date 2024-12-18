@@ -1,3 +1,6 @@
+<?php
+$url = isset($_GET['continue']) ? $_GET['continue'] : null;
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -33,7 +36,6 @@
                         <label for="password">Senha:</label>
                         <input type="password" id="password" name="password" required placeholder="Senha" autocomplete="off">
                     </div>
-                    
                     <button type="submit" id="login">Entrar</button>
                     <div class="link">
                         <a href="registro.php">Cadastro</a>
@@ -50,6 +52,9 @@
     </div>
     <script>
         $(document).ready(function() {
+            
+            var continueUrl = "<?php echo htmlspecialchars($url, ENT_QUOTES, 'UTF-8'); ?>";
+
             $('#loginForm').on('submit', function(event) {
                 event.preventDefault(); // Impede o envio normal do formulário
 
@@ -63,7 +68,7 @@
 
                         if (res.status === 'success') {
                             // Redireciona para a página de dashboard
-                            window.location.href = res.redirect;
+                            window.location.href = continueUrl || 'login.php';
                         }
                     },
                     error: function(xhr, status, error) {

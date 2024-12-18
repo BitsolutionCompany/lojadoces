@@ -35,6 +35,9 @@ header.header {
     padding: 5px; 
     color: white;
 }
+header.header h1.loginh1{
+    color: var(--secundary);
+}
 header.header div.logo {
     width: 130px;
     height: 130px;
@@ -66,7 +69,7 @@ nav.navbar ul.list-menu1 a.active{
     background-color: var(--white);
     color: var(--secundary);
 }
-nav.navbar ul.list-menu1 a, nav.navbar ul.list-menu2 a{
+nav.navbar ul.list-menu1 a, nav.navbar ul.list-menu2 a, nav.navbar ul.list-menu2 li label{
     margin-left: 10px;
     padding: 10px 15px;
     transition: background-color 0.3s;
@@ -76,12 +79,40 @@ nav.navbar ul.list-menu1 a, nav.navbar ul.list-menu2 a{
     font-weight: bold;
     text-transform: uppercase;
 }
-nav.navbar ul.list-menu1 a:hover, nav.navbar ul.list-menu2 a:hover {
+nav.navbar ul.list-menu2 li{
+    display: flex;
+}
+nav.navbar ul.list-menu1 a:hover, nav.navbar ul.list-menu2 a:hover, nav.navbar ul.list-menu2 li label:hover {
     background-color: var(--white);
     color: var(--secundary);
 }
-header.header h1.loginh1{
-    color: var(--secundary);
+nav.navbar ul.list-menu2 ul{
+    list-style-type: none;
+    padding: 0;
+    list-style: none
+}
+nav.navbar ul.list-menu2 ul li{
+    position: relative;
+    cursor: pointer;
+}
+.submenu {
+    display: none;
+    visibility: hidden;
+    position: absolute;
+    top: 29.3%;
+    width: 220px;
+    background-color: var(--secundary);
+    z-index: 1000; 
+}
+.submenu a{
+    width: 220px;
+    text-align: center;
+    border-radius: 0px !important;
+    margin-left: 0px !important
+}
+nav.navbar ul.list-menu2 li#subm:hover .submenu {
+    display: inline-block;
+    visibility: visible;
 }
 /* Main */
 main.main {

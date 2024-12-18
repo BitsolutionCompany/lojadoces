@@ -1,19 +1,26 @@
 <?php
 require_once '../../Conection/Conexao.php';
-session_start();
+session_start(); // Inicia a sessão
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    // Sanitização e validação dos dados de entrada
     $username = strtolower(trim($_POST['username']));
     $password = trim($_POST['password']);
-
+    
     if(empty($username) || empty($password)){
         echo json_encode(['status' => 'error', 'message' => 'Usuário e senha são obrigatórios.']);
         exit();
     }
 
+    // Validação contra credenciais hardcoded
+    // if ($username === "biacosmetico" && $password === "Biacosmetico.2020"){
+    //     $_SESSION['user'] = ["name" => $username, "email" => $username];
+    //     echo json_encode(['status' => 'success', 'message' => 'Login bem-sucedido!', 'redirect' => 'dashboard.php']);
+    //     exit();
+    // }
     try{
         // Preparar a consulta
-        $stmt = $conn->prepare("SELECT * FROM user WHERE email = :username");
+        $stmt = $conn->prepare("SELECT * FROM user WHERE LOWER(email) = :username ");
         
         // Associar os parâmetros
         $stmt->bindValue(':username', $username);
@@ -26,8 +33,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
             // Verificar a senha
             if(password_verify($password, $results['password'])){
-                $_SESSION['user'] = ["name" => $results['nome'], "email" => $results['nome']]; // ou outro identificador
-                echo json_encode(['status' => 'success', 'message' => 'Login bem-sucedido!', 'redirect' => 'index.php']);
+                $_SESSION['user'] = ["name" => $results['name'], "email" => $results['name']]; // ou outro identificador
+                // $url = isset($_GET['continue']) ? $_GET['continue'] : null;
+                // , 'redirect' => $url
+                echo json_encode(['status' => 'success', 'message' => 'Login bem-sucedido!']);
                 exit();
             }else{
                 echo json_encode(['status' => 'error', 'message' => 'Senha incorreta.']);

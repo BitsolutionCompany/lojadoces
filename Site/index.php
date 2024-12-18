@@ -1,11 +1,22 @@
 <?php
     require_once '../Conection/Conexao.php';
+    session_start();
 
     if (isset($_SESSION['user'])) {
         // Aqui você pode acessar o nome de usuário
         $username = $_SESSION['user']['name'];
         $email = $_SESSION['user']['email'];
-    } 
+    }
+function getCurrentUrl() {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+    $host = $_SERVER['HTTP_HOST'];
+    $uri = $_SERVER['REQUEST_URI'];
+    
+    return $protocol . $host . $uri;
+}
+
+// Uso da função
+$currentUrl = getCurrentUrl();
 ?>
 
 <!DOCTYPE html>
@@ -57,14 +68,31 @@
             <ul class="list-menu2">
                 <?php
                     if (isset($_SESSION['user'])) {
-                    // Aqui você pode acessar o nome de usuário
-                        $username = $_SESSION['user']['name'];
-                        $email = $_SESSION['user']['email'];
+                        $n = $username;
+                        $a = explode(' ', $n);
+                        $p1 = array_shift($a);
+                        $p2 = array_pop($a);
+                        $nome = $p1.' '.$p2;
                 ?>
+                <li id="subm">       
+                    <label for="submenu-toggle">
+                        <?php echo $nome; ?>
+                    </label>
+                    <ul class="submenu">
+                        <li><a href="editar_perfil.php">Editar Perfil</a></li>
+                        <li><a href="configuracoes.php">Configurações</a></li>
+                        <li><a href="functions/logout.php">Sair</a></li>
+                    </ul>
+                </li>
+                <a href="configuracao.php">
+                    <li>
+                        Configurações
+                    </li>
+                </a>
                 <?php
                     }else{
                 ?>
-                <a href="login.php">
+                <a href="login.php?continue=<?php echo $currentUrl ?>">
                     <li>
                         Entrar
                     </li>
