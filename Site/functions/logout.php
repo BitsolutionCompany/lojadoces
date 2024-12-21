@@ -1,4 +1,5 @@
 <?php
+$url = isset($_GET['continue']) ? $_GET['continue'] : null;
 session_start(); // Inicia a sessão
 
 // Destrói todas as variáveis de sessão
@@ -8,6 +9,6 @@ $_SESSION = array(); // Limpa a sessão
 session_destroy(); // Destrói a sessão
 
 // Redireciona para a página de login
-header("Location: ../index.php");
+header("Location: $url");
 exit(); // Certifique-se de sair após o redirecionamento
 ?>

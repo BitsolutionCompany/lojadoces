@@ -81,7 +81,7 @@ $currentUrl = getCurrentUrl();
                     <ul class="submenu">
                         <li><a href="editar_perfil.php">Editar Perfil</a></li>
                         <li><a href="configuracoes.php">Configurações</a></li>
-                        <li><a href="functions/logout.php">Sair</a></li>
+                        <li><a href="functions/logout.php?continue=<?php echo $currentUrl ?>">Sair</a></li>
                     </ul>
                 </li>
                 <a href="configuracao.php">
@@ -105,7 +105,6 @@ $currentUrl = getCurrentUrl();
                 <?php
                     }
                 ?>
-                
             </ul>
         </nav>
         <main class="main">
