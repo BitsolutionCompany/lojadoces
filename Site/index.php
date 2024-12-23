@@ -6,7 +6,16 @@
         // Aqui você pode acessar o nome de usuário
         $username = $_SESSION['user']['name'];
         $email = $_SESSION['user']['email'];
+        $code = $_SESSION['user']['code'];
+
+        $n = $username;
+        $a = explode(' ', $n);
+        $p1 = array_shift($a);
+        $p2 = array_pop($a);
+        $nome = $p1.' '.$p2;
     }
+    
+    
 function getCurrentUrl() {
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
     $host = $_SERVER['HTTP_HOST'];
@@ -27,8 +36,12 @@ $currentUrl = getCurrentUrl();
     <title>Flores da Terra - HOMEPAGE</title>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <!-- CSS -->
-     <link rel="stylesheet" href="css/style.css">
-     <!-- JS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <!-- JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script> -->
+    <script src="js/mobile-menu.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -36,6 +49,76 @@ $currentUrl = getCurrentUrl();
             <div class="logo">
                 <img src="images/logo2.png" alt="logo empresa" class="logo">
             </div>
+            <nav class="mobile-menu">
+                <label for="menu-mobile">
+                    <input type="checkbox" id="menu-mobile" class="mobile-menu1">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+                <div class="modal">
+                    <ul class="list-menu-mobile">
+                        <div class="center">
+                            <a href="index.php" class="active">
+                                <li>
+                                    Home
+                                </li>
+                            </a>
+                            <a href="produtos.php">
+                                <li>
+                                    Produtos
+                                </li>
+                            </a>
+                            <a href="favoritos.php">
+                                <li>
+                                    Favoritos
+                                </li>
+                            </a>
+                            <a href="sejarevenda.php">
+                                <li>
+                                    Seja Revenda
+                                </li>
+                            </a>
+                            <a href="sejafranqueado.php">
+                                <li>
+                                    Seja Franqueado
+                                </li>
+                            </a>
+                            <div class="login-user">
+                            <?php
+                                if (isset($_SESSION['user'])) {
+                            ?>
+                            <a href="configuracoes.php?code=<?php echo $code; ?>">
+                                <li>
+                                    Configurações
+                                </li>
+                            </a>
+                            <a href="functions/logout.php?continue=<?php echo $currentUrl ?>">
+                                <li>
+                                    Sair
+                                </li>
+                            </a>
+                            <?php
+                                }else{
+                            ?>
+                            <a href="login.php?continue=<?php echo $currentUrl ?>">
+                                <li>
+                                    Entrar
+                                </li>
+                            </a>
+                            <a href="registro.php">
+                                <li>
+                                    Cadastro
+                                </li>
+                            </a>
+                            <?php
+                                }
+                            ?>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
         </header>
         <nav class="navbar">
             <ul class="list-menu1">
@@ -68,11 +151,6 @@ $currentUrl = getCurrentUrl();
             <ul class="list-menu2">
                 <?php
                     if (isset($_SESSION['user'])) {
-                        $n = $username;
-                        $a = explode(' ', $n);
-                        $p1 = array_shift($a);
-                        $p2 = array_pop($a);
-                        $nome = $p1.' '.$p2;
                 ?>
                 <li id="subm">       
                     <label for="submenu-toggle">
@@ -84,7 +162,7 @@ $currentUrl = getCurrentUrl();
                         <li><a href="functions/logout.php?continue=<?php echo $currentUrl ?>">Sair</a></li>
                     </ul>
                 </li>
-                <a href="configuracao.php">
+                <a href="configuracao.php?code=<?php echo $code; ?></a>">
                     <li>
                         Configurações
                     </li>
