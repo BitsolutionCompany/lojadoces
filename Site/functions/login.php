@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // }
     try{
         // Preparar a consulta
-        $stmt = $conn->prepare("SELECT * FROM user WHERE LOWER(email) = :username ");
+        $stmt = $conn->prepare("SELECT * FROM user WHERE LOWER(email) = :username AND deletado = false");
         
         // Associar os parâmetros
         $stmt->bindValue(':username', $username);
@@ -33,7 +33,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
             // Verificar a senha
             if(password_verify($password, $results['password'])){
-                $_SESSION['user'] = ["name" => $results['name'], "email" => $results['email'], "code" => $results['codeuser']]; // ou outro identificador
+                $_SESSION['user'] = ["name" => $results['name'], "email" => $results['email'], "code" => $results['codeuser'], "status" => $results['status']]; // ou outro identificador
                 // $url = isset($_GET['continue']) ? $_GET['continue'] : null;
                 // , 'redirect' => $url
                 echo json_encode(['status' => 'success', 'message' => 'Login bem-sucedido!']);

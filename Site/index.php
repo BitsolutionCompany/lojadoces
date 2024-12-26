@@ -7,6 +7,7 @@
         $username = $_SESSION['user']['name'];
         $email = $_SESSION['user']['email'];
         $code = $_SESSION['user']['code'];
+        $status = $_SESSION['user']['status'];
 
         $n = $username;
         $a = explode(' ', $n);
